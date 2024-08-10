@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blu3duck | arlsdk projects</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: "Courier New", Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            color: #ffcc00;
+            font-size: 3em;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1.2em;
+            color: #cccccc;
+        }
+
+        article {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+        }
+
+        article h2 {
+            color: #ffcc00;
+            font-size: 2em;
+            margin-top: 40px;
+        }
+
+        article p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        article a {
+            color: #00ccff;
+            text-decoration: underline;
+        }
+
+        article a:hover {
+            color: #ff5733;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .image-container img {
+            width: 100%;
+            max-width: 200px;
+            border-radius: 8px;
+        }
+
+        article ul, article ol {
+            margin: 20px 0;
+            padding-left: 40px;
+        }
+
+        article ul li, article ol li {
+            margin-bottom: 10px;
+        }
+
+        article ul li::marker {
+            color: #ffcc00;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.2em;
+        }
+
+        footer a {
+            color: #00ccff;
+            text-decoration: underline;
+            margin: 0 15px;
+        }
+
+        footer a:hover {
+            color: #ff5733;
+        }
+    </style>
+</head>
+<body>
+
+
+    <header>
+
+        <h1>Blu3duck</h1>
+        <p>Bluetooth Controlled Rubber Ducky based on 16u2</p>
+        <div class="image-container">
+            <img src="Blu3duck.png" alt="Descriptive Image Text">
+        </div>
+    </header>
+
+    <article>
+
+        <h2>Project</h2>
+        <p>Blu3duck is a project that lets you use your Arduino as a Bluetooth controlled Universal Keyboard/Mouse emulator with spoofable VID/PID.</p>
+
+        <p>Normally, using an Arduino UNO or MEGA is kind of impossible for emulating Keyboard/Mouse. In this project I used <a href="https://github.com/NicoHood/HoodLoader2">HoodLoader2</a> for using the 16u2 chip on Arduino UNO to emulate and use its Keyboard/Mouse functions without losing access to program the 328p.</p>
+
+        <h2>Parts</h2>
+        <p>You should have 4 parts, and after that, you're all set:</p>
+        <ul>
+            <li><strong>Any Bluetooth Terminal App:</strong> To use the functions of the code.</li>
+            <li><strong>Arduino Uno:</strong> To create the entire project. You must use one that comes with 16u2, 8u2 or 32u4. CH340G won't work.</li>
+            <li><strong>HC-05 Bluetooth Module:</strong> To be able to communicate between your Smartphone and Arduino.</li>
+            <li><strong>HoodLoader2:</strong> Firmware that allows reprogramming of the 16u2 chip. You should visit its Wiki page to understand the basics, <a href="https://github.com/NicoHood/HoodLoader2/wiki">Wiki.</a></li>
+        </ul>
+
+        <h2>Steps</h2>
+        <p>Setting up the Blu3duck project is pretty easy,</p>
+        <ol>
+            <li>You should first install <a href="https://github.com/NicoHood/HoodLoader2">HoodLoader2</a> on your Arduino (due is not supported). Please read the Wiki to understand how it works.</li>
+            <li>After installing the HoodLoader2, you should upload the <a href="https://github.com/arlsdk/blu3duck/tree/main/328p">code</a> for the 328p (or your Chip, shouldn't make a difference). Please pay attention to the Board Selection on Arduino IDE.</li>
+            <li>After uplading the first part of code, you will now upload the second part. This part is going to emulate a Keyboard. We will upload it to the 16u2.</li>
+            <li>Please switch to 16u2 (HoodLoader 16u2 is the board name). Follow the Wiki page to understand <a href="https://github.com/NicoHood/HoodLoader2/wiki/How-to-use-reset">how.</a></li>
+            <li>Once you switch to the 16u2, you should be ready to upload the <a href="https://github.com/arlsdk/blu3duck/tree/main/16u2">code</a> for 16u2.</li>
+            <li>Once you upload to the 16u2, you should be ready to use Blu3duck. Do not forget to tip your PIN (just once) before running any command ;).</li>
+        </ol>
+        <h2>But, how?</h2>
+        <p>I don't know i you've spotted it, but we used 2 different code to create our own Blu3duck.</p>
+
+        <p>One for the 328p and one for 16u2. This is exactly how it works:</p>
+         <ol>
+            <li>The code in the 328p listens for any command/text that comes from your Bluetooth Terminal.</li>
+            <li>Spotted a command? 328p filters it and removes any unecessary part from it.</li>
+            <li>Once done with the removing, 328p passes the command to the 16u2 through serial. To learn more, <a href="https://github.com/NicoHood/HoodLoader2/tree/master/avr/examples/HID-Bridge">HID Bridge.</a></li>
+            <li>Once the 16u2 recevies a command, it filters and looks for matches for Special Keys (for example, the Windows Key on the Keyboard).</li>
+            <li>If there is a match, it presses the key and then releases (.releaseAll()).</li>
+            <li>If not, it writes the text that you've sent through your Bluetooth Terminal.</li>
+        </ol>
+
+    </article>
+
+    <footer>
+        <p>This project is intended solely for educational purposes. It is designed to help users learn and experiment with microcontroller programming and Bluetooth communication. Any application of this project outside of a controlled, educational environment may be illegal and is strongly discouraged. The author does not condone or endorse the use of this project for any purpose other than education. Users are fully responsible for ensuring that their use of this project complies with all applicable laws and regulations.</a></p>
+    </footer>
+</body>
+</html>
