@@ -12,8 +12,9 @@
             margin: 0;
             padding: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
             text-align: center;
             position: relative;
@@ -50,6 +51,22 @@
         p {
             font-size: 1.2em;
             line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .projects {
+            margin-top: 40px;
+        }
+
+        .projects h2 {
+            color: #ffcc00;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .projects p {
+            font-size: 1.2em;
+            margin-bottom: 15px;
         }
 
         .penguin {
@@ -69,8 +86,11 @@
         <hr>
         <p>in case you want something useful:</p>
         <p><a href="https://kernel.org">kernel.org</a> | <a href="https://github.com/arlsdk">my github page</a> | <a href="https://wiki.archlinux.org">arch wiki</a></p>
-        <h1>projects,</h1>
-        <p><a href="https://arlsdk.github.io/projects/blu3duck.html">Blu3duck Bluetooth Rubber Duck</a></p>
+
+        <div class="projects">
+            <h2>projects,</h2>
+            <p><a href="https://arlsdk.github.io/projects/blu3duck.html">Blu3duck: Bluetooth Rubber Duck</a> - A Bluetooth controlled Rubber Duck project based on Arduino.</p>
+        </div>
     </div>
     <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg" alt="cool penguin tux is chilling here" class="penguin">
 </body>
